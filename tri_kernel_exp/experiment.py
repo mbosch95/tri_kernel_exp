@@ -5,12 +5,11 @@ import copy
 
 
 def experiment(sample_size, n, eps, k=None):
-    """Given a sample size, the size of the triangulation n, the number of flips to be performed into 
-    that triangulation to generate the other pair (if set to None creates a new random triangulation) and 
-    the epsilon of the kernel then returns:
+    """Given a sample size, the size of the triangulation n, the number of flips to generate one triangulation starting from other 
+    (if set to None creates a new random triangulation) and epsilon returns:
     - kernel_size: The size of the instance after applying the kernel
-    - kernel_size_n: The size of the instance after applying the kernel as a function of n
-    - kernel_size_theoric:  
+    - kernel_size_n: The size of the instance after applying the kernel as a fraction of n
+    - kernel_size_theoric: The theoretical upper bound on the size of the kernel.
     - nc_diag_prekernel: The number of non-common diagonals before applying the kernel
     - nc_diag_postkernel: The number of non-common diagonals after applying the kernel
     - removed_instances: Number of instances removed when applying the kernel (the kernel first step is to 
@@ -51,6 +50,10 @@ def experiment(sample_size, n, eps, k=None):
     return rv
 
 def multi_experiment(n_array, eps_array, k_array_n, sample_size, save=True):
+    """Given lists of sizes, epsilons and k's, and a sample size, it performs an
+    experiment for each possible combination of the elements in the lists. If 
+    save is set to true then it saves the result of every individual experiment."""
+    
     datas = itertools.product(n_array, eps_array, k_array_n)
     rv = {
         'n': [],

@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 class Triangulation(object):
     def __init__(self, n, V=None, D=None, coords=None):
         """A triangulation is defined by a list of vertices and a list of diagonals.
-        It uses a variable for the size when creating a new triangulation, and coordinates 
-        to print the triangulation. Diagonals are a tuple of sorted vertices."""
+        A triangulation is created by given its size n and a list of its vertices and 
+        diagonals. If no vertices are given, then the vertices are labeled from 0 to n-1.
+        We define coordinates to print the triangulation. Diagonals are tuples of sorted vertices."""
         self.n = n
 
         if V == None:
@@ -27,8 +28,8 @@ class Triangulation(object):
             self.coords = coords
 
     def __random_noncons_vertices(self):
-        """Selects two random non-consecutive vertices from the set of vertices of the polygon.
-        It returns them sorted to convert them easily to a diagonal."""
+        """Selects two random non-consecutive vertices from the set of vertices of the polygon
+        and returns them sorted."""
         v1 = random.choice(self.V)
         v2 = random.choice([i for i in self.V if 
              abs(self.V.index(v1) - self.V.index(i))%(self.n - 1) > 1])
@@ -48,7 +49,7 @@ class Triangulation(object):
     def __random_diagonals(self):
         """Initializes the diagonals of a polygon randomly. It does so by creating a diagonal,
         dividing the vertices along that diagonal and creating a new triangulation for each 
-        new sets of vertices, so it can apply the procedure recursisvely."""
+        new sets of vertices, and then applying the procedure recursisvely."""
         if self.n <= 3:
             return set()
 
@@ -83,7 +84,7 @@ class Triangulation(object):
 
     def multi_divide(self, D):
         """Divides the triangulation along a set of diagonals into len(D) + 1 triangulations.
-        It does so by dividing the triangulation along some random diagonal and applying the
+        It does so by dividing the triangulation along an arbitrary diagonal and applying the
         procedure recursively, dividing each triangulation along their correspondent diagonals."""
         if not D:
             return [self]
@@ -92,8 +93,7 @@ class Triangulation(object):
         return t1.multi_divide([d for d in D if d in t1.D]) + t2.multi_divide([d for d in D if d in t2.D])
 
     def flip(self, d):
-        """Flips a diagonal of the triangulation. The two other vertices of the quadrilateral
-        are found based on that they must be the end point of edges of both v1 and v2 (with d=(v1,v2))."""
+        """Flips a diagonal d of the triangulation."""
         edges = self.D.union(
                 {tuple(sorted((i, j))) for i, j in zip(self.V, self.V[1:] + self.V[0:1])})
         v = [v for v in self.V if 
