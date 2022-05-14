@@ -14,6 +14,7 @@ def experiment(sample_size, n, eps, D=None):
     - nc_diag_postkernel: The number of non-common diagonals after applying the kernel
     - removed_instances: Number of instances removed when applying the kernel (the kernel first step is to 
     divide the triangulation into several instances)
+    - max_removed: Size of the instance of maximum size that was removed.
     """
 
     rv = {
