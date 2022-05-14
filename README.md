@@ -37,4 +37,5 @@ To execute the program execute the file "tri_kernel_exp.py". Then the program wi
 ## Authors
 
 Miguel Bosch Calvo
+
 [Steven Kelk](http://skelk.sdf-eu.org)
